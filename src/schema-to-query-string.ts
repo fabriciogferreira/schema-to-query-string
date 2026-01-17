@@ -1,5 +1,5 @@
 //* Libraries imports
-import { z, ZodArray, ZodObject, ZodType } from "zod";
+import { z, ZodArray, ZodObject, ZodType } from "zod/v4";
 
 const unwrapNullable = (schema: ZodType): ZodType => {
   return schema instanceof z.ZodNullable
