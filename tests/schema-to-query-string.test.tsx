@@ -131,6 +131,7 @@ const schemaCases: [ZodObject, string][] = schemaCombinations.map((objects) => {
 	let expectedQueryString = ''
 
 	objects.forEach(([object, queryString]) => {
+		//@ts-expect-error
 		schema = deepExtendZod(schema, object)
 
 		const params = queryString.split("&")

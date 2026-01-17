@@ -10,7 +10,7 @@
 		"dist"
 	],
 	"scripts": {
-		"build": "tsup",
+		"build": "tsc",
 		"test": "bun test",
 		"prepublishOnly": "bun run build"
 	},
