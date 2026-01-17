@@ -44,18 +44,14 @@ export const schemaToQueryString = (
 
         includes.add(nextPath);
 				
-				// OBJETO
-				if (rawField instanceof ZodObject) {
-					walk(rawField, nextPath);
-				}
-
 				// ARRAY
 				if (rawField instanceof ZodArray) {
 					rawField = rawField.unwrap()
-	
-					if (rawField instanceof ZodObject) {
-						walk(rawField, nextPath);
-					}
+				}
+				
+				// OBJETO
+				if (rawField instanceof ZodObject) {
+					walk(rawField, nextPath);
 				}
 
 				continue;
