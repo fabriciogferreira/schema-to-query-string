@@ -31,14 +31,18 @@ export const schemaToQueryString = (
 
     for (const key in currentSchema.shape) {
       const rawField = currentSchema.shape[key] as ZodType;
-      const field = unwrapNullable(rawField);
+      
+			const field = unwrapNullable(rawField);
+      
+			let nextPath = '';
+			if (field instanceof ZodObject || field instanceof ZodArray) {
+				nextPath = resourcePath
+					? `${resourcePath}.${key}`
+					: key;
+			}
 
       // OBJETO
       if (field instanceof ZodObject) {
-        const nextPath = resourcePath
-          ? `${resourcePath}.${key}`
-          : key;
-
         includes.add(nextPath);
         walk(field, nextPath);
         continue;
@@ -48,10 +52,6 @@ export const schemaToQueryString = (
       if (field instanceof ZodArray) {
         /** @ts-expect-error */
         const element = unwrapNullable(field.element);
-
-        const nextPath = resourcePath
-          ? `${resourcePath}.${key}`
-          : key;
 
         includes.add(nextPath);
 
