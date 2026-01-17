@@ -1,7 +1,7 @@
 //* Libraries imports
-import { z, ZodArray, ZodObject, ZodTypeAny } from "zod";
+import { z, ZodArray, ZodObject, ZodType } from "zod";
 
-const unwrapNullable = (schema: ZodTypeAny): ZodTypeAny => {
+const unwrapNullable = (schema: ZodType): ZodType => {
   return schema instanceof z.ZodNullable
     /** @ts-expect-error */
     ? schema.unwrap()
@@ -30,7 +30,7 @@ export const schemaToQueryString = (
     }
 
     for (const key in currentSchema.shape) {
-      const rawField = currentSchema.shape[key] as ZodTypeAny;
+      const rawField = currentSchema.shape[key] as ZodType;
       const field = unwrapNullable(rawField);
 
       // OBJETO

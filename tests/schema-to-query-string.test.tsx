@@ -2,7 +2,7 @@
 import { it, expect } from "bun:test";
 
 //* Libraries imports
-import z, { ZodObject } from "zod/v4";
+import z, { ZodObject, ZodType } from "zod";
 import fastCartesian from "fast-cartesian";
 import { PowerSet } from 'js-combinatorics';
 
@@ -72,9 +72,7 @@ const partialObjects: [object, string][] = [
 	],
 ];
 
-import { ZodTypeAny } from "zod"
-
-function unwrapObject(schema: ZodTypeAny): ZodObject<any> | null {
+function unwrapObject(schema: ZodType): ZodObject<any> | null {
   if (schema instanceof z.ZodObject) {
     return schema
   }
@@ -92,15 +90,15 @@ function unwrapObject(schema: ZodTypeAny): ZodObject<any> | null {
   return null
 }
 
-function isNullable(schema: ZodTypeAny): boolean {
+function isNullable(schema: ZodType): boolean {
   return schema instanceof z.ZodNullable
 }
 
 function deepExtendZod(
   base: ZodObject<any>,
-  extension: Record<string, ZodTypeAny>
+  extension: Record<string, ZodType>
 ): ZodObject<any> {
-  const newShape: Record<string, ZodTypeAny> = { ...base.shape }
+  const newShape: Record<string, ZodType> = { ...base.shape }
 
   for (const key in extension) {
     const baseField = newShape[key]
