@@ -1,5 +1,5 @@
 //* Libraries imports
-import { z, ZodArray, ZodObject, ZodType } from "zod/v4";
+import { z, ZodArray, ZodNullable, ZodObject, ZodType } from "zod/v4";
 
 const unwrapNullable = (schema: ZodType): ZodType => {
   return schema instanceof z.ZodNullable
@@ -30,28 +30,30 @@ export const schemaToQueryString = (
     }
 
     for (const key in currentSchema.shape) {
-      const rawField = currentSchema.shape[key] as ZodType;
+      let rawField = currentSchema.shape[key];
       
-			const field = unwrapNullable(rawField);
+			if (rawField instanceof ZodNullable) {
+				rawField = rawField.unwrap()
+			}
       
 			let nextPath = '';
-			if (field instanceof ZodObject || field instanceof ZodArray) {
+			if (rawField instanceof ZodObject || rawField instanceof ZodArray) {
 				nextPath = resourcePath
 					? `${resourcePath}.${key}`
 					: key;
 			}
 
       // OBJETO
-      if (field instanceof ZodObject) {
+      if (rawField instanceof ZodObject) {
         includes.add(nextPath);
-        walk(field, nextPath);
+        walk(rawField, nextPath);
         continue;
       }
 
       // ARRAY
-      if (field instanceof ZodArray) {
+      if (rawField instanceof ZodArray) {
         /** @ts-expect-error */
-        const element = unwrapNullable(field.element);
+        const element = unwrapNullable(rawField.element);
 
         includes.add(nextPath);
 
