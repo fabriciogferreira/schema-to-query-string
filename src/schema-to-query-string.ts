@@ -1,13 +1,6 @@
 //* Libraries imports
 import { z, ZodArray, ZodNullable, ZodObject, ZodType } from "zod/v4";
 
-const unwrapNullable = (schema: ZodType): ZodType => {
-  return schema instanceof z.ZodNullable
-    /** @ts-expect-error */
-    ? schema.unwrap()
-    : schema;
-};
-
 export const schemaToQueryString = (
   schema: ZodObject,
   rootResource: string,
