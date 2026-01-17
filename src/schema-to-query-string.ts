@@ -36,9 +36,8 @@ export const schemaToQueryString = (
 				rawField = rawField.unwrap()
 			}
       
-			let nextPath = '';
 			if (rawField instanceof ZodObject || rawField instanceof ZodArray) {
-				nextPath = resourcePath
+				let nextPath = resourcePath
 					? `${resourcePath}.${key}`
 					: key;
 
