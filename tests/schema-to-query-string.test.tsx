@@ -12,13 +12,13 @@ import { schemaToQueryString } from "../src";
 const partialObjects: [object, string][] = [
 	[
 		{
-			rootOne: "z.string()",
+			rootOne: z.string(),
 		},
 		"fields[root]=rootOne"
 	],
 	[
 		{
-			rootTwo: "z.string()",
+			rootTwo: z.string(),
 		},
 		"fields[root]=rootTwo"
 	],
