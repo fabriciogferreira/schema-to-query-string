@@ -1,13 +1,19 @@
 {
 	"name": "@fabriciogferreira/schema-to-query-string",
-	"version": "0.1.4",
+	"version": "0.1.5",
+	"description": "Function for convert schema to Spatie Laravel Query Builder",
 	"type": "module",
 	"license": "MIT",
-	"author": "Fabrício G. Ferreira <fabriciof481@gmail.com>",
-	"description": "Function for convert schema to Spatie Laravel Query Builder",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
 	"files": [
-		"src",
-		"./index.ts"
+		"dist"
 	],
 	"keywords": [
 		"conversion",
@@ -23,13 +29,13 @@
 		"test": "bun test",
 		"prepublishOnly": "bun run build"
 	},
+	"peerDependencies": {
+		"zod": "^4.3.5"
+	},
 	"devDependencies": {
-		"bun-types": "^1.3.5",
 		"typescript": "^5.9.3",
+		"bun-types": "^1.3.5",
 		"fast-cartesian": "^9.0.1",
 		"js-combinatorics": "^2.1.2"
-	},
-	"dependencies": {
-		"zod": "^4.3.5"
 	}
 }
