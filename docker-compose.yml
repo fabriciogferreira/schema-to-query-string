@@ -1,0 +1,10 @@
+services:
+  schema-to-query-string:
+    user: 1000:1000
+    image: oven/bun:1.3.5-slim
+    command: [ "bun install && tail -f /dev/null" ]
+    volumes:
+      - ./:/srv/
+    entrypoint: [ "sh", "-c" ]
+    working_dir: /srv
+    container_name: schema-to-query-string
