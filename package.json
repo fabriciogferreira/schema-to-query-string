@@ -2,7 +2,7 @@
 	"name": "@fabriciogferreira/schema-to-query-string",
 	"description": "function for convert schema to Spatie Laravel Query Builder",
 	"version": "0.1.0",
-	"private": true,
+	"private": false,
 	"main": "dist/index.cjs",
 	"module": "dist/index.js",
 	"types": "dist/index.d.ts",
