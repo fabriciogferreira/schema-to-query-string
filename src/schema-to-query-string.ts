@@ -47,7 +47,6 @@ export const schemaToQueryString = (
 				// OBJETO
 				if (rawField instanceof ZodObject) {
 					walk(rawField, nextPath);
-					continue;
 				}
 
 				// ARRAY
@@ -57,9 +56,9 @@ export const schemaToQueryString = (
 					if (rawField instanceof ZodObject) {
 						walk(rawField, nextPath);
 					}
-	
-					continue;
 				}
+
+				continue;
 			}
 
       // CAMPO SIMPLES
