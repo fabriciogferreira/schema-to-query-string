@@ -43,25 +43,24 @@ export const schemaToQueryString = (
 					: key;
 
         includes.add(nextPath);
+				
+				// OBJETO
+				if (rawField instanceof ZodObject) {
+					walk(rawField, nextPath);
+					continue;
+				}
+
+				// ARRAY
+				if (rawField instanceof ZodArray) {
+					rawField = rawField.unwrap()
+	
+					if (rawField instanceof ZodObject) {
+						walk(rawField, nextPath);
+					}
+	
+					continue;
+				}
 			}
-
-      // OBJETO
-      if (rawField instanceof ZodObject) {
-        walk(rawField, nextPath);
-        continue;
-      }
-
-      // ARRAY
-      if (rawField instanceof ZodArray) {
-        /** @ts-expect-error */
-        const element = unwrapNullable(rawField.element);
-
-        if (element instanceof ZodObject) {
-          walk(element, nextPath);
-        }
-
-        continue;
-      }
 
       // CAMPO SIMPLES
       fields[currentFieldsKey].push(key);
