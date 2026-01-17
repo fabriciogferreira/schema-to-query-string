@@ -1,5 +1,5 @@
 //* Libraries imports
-import { z, ZodArray, ZodNullable, ZodObject, ZodType } from "zod/v4";
+import { ZodArray, ZodNullable, ZodObject } from "zod/v4";
 
 export const schemaToQueryString = (
   schema: ZodObject,
