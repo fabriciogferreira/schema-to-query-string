@@ -1,11 +1,12 @@
 //* Libraries imports
 import { ZodArray, ZodNullable, ZodObject } from "zod/v4";
+import { fieldsParam, includeParam, rootResourceParam, schemaParam } from "./types";
 
 export const schemaToQueryString = (
-  schema: ZodObject,
-  rootResource: string,
-	includeKey: string = "include",
-	fieldsKey: string = "fields"
+  schema: schemaParam,
+  rootResource: rootResourceParam,
+	includeKey: includeParam = "include",
+	fieldsKey: fieldsParam = "fields"
 ) => {
   const fields: Record<string, string[]> = {};
   const includes = new Set<string>();
@@ -13,7 +14,7 @@ export const schemaToQueryString = (
   fields[rootResource] = [];
 
   const walk = (
-    currentSchema: ZodObject,
+    currentSchema: schemaParam,
     resourcePath: string | null
   ) => {
     const currentFieldsKey = resourcePath ?? rootResource;
@@ -72,5 +73,12 @@ export const schemaToQueryString = (
     );
   }
 
-  return "?" + queryParts.join("&");
+	const string = queryParts.length ? queryParts.join("&") : "";
+
+	const queryString = string ? "?" + string : "";
+
+	return {
+		string,
+		queryString
+	}
 };

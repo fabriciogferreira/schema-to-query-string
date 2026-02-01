@@ -3,9 +3,7 @@ import { it, expect } from "bun:test";
 import z, { ZodObject, ZodType } from "zod/v4";
 import fastCartesian from "fast-cartesian";
 import { PowerSet } from 'js-combinatorics';
-
-//* Utils imports
-import { schemaToQueryString } from "../src";
+import { schemaToQueryString, schemaForTest, expectedStringForTest, expectedQueryStringForTest } from "../src";
 
 const partialObjects: [object, string][] = [
 	[
@@ -154,7 +152,8 @@ const schemaCases: [ZodObject, string][] = schemaCombinations.map((objects) => {
 	let includeValues = Array.from(includes).join(',')
 	let includeQueryString = includeValues ? `include=${Array.from(includes).join(',')}` : ''
 	let filtersQueryString = Object.entries(fields).map(([key, values]) => `${key}=${Array.from(values).join(',')}`).join('&')
-	expectedQueryString = '?' + [filtersQueryString, includeQueryString].filter(Boolean).join('&')
+	let parts = [filtersQueryString, includeQueryString].filter(Boolean)
+	expectedQueryString = parts.length ? '?' + parts.join('&') : ''
 
 	return [schema, expectedQueryString]
 });
@@ -180,10 +179,10 @@ const cases: [string, string, string, string, ZodObject][] = combinations.map(([
 	return [`${fieldKey},${includeKey}`, expectedQueryString, fieldKey, includeKey, schema]
 })
 
-it.each(cases)("when config is %s and should %s", (_, expected, fieldKey, includeKey, schema) => {
+it.each(cases)("when config is %s and should %s", (_: string, expected: string, fieldKey: string, includeKey: string, schema: ZodObject) => {
 	expected = expected.replace("include", includeKey)
 	expected = expected.replaceAll("fields", fieldKey)
-	const received = schemaToQueryString(schema, "root", includeKey, fieldKey)
+	const { queryString: received } = schemaToQueryString(schema, "root", includeKey, fieldKey)
 	// console.log("======================================================================================================")
 	// console.log(received, expected)
 	expect(received).toBe(expected)
