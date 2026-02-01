@@ -1,6 +1,6 @@
 {
 	"name": "@fabriciogferreira/schema-to-query-string",
-	"version": "0.1.6",
+	"version": "0.1.7",
 	"description": "Function for convert schema to Spatie Laravel Query Builder",
 	"type": "module",
 	"license": "MIT",
